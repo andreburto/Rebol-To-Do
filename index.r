@@ -9,5 +9,7 @@ print {<body>}
 print h1Tag "Index"
 print pTag "Hello, world!"
 print pTag makeImage/alt {http://pics.mytrapster.com/wp-content/pikachoors/th_20150624230612.png} "Yvonne"
+print pTag "List below..."
+print ulTag ["a" "b" ["c" "1" "2" "3"] "d" "e"]
 print pTag makeLink "Homepage" "http://andrewburton.biz/"
 print {</body></html>}

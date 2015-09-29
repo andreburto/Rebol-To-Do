@@ -96,7 +96,7 @@ h1Tag: func[ h1Text /style h1Attribs ] [
 ]
 
 listItem: func [item] [
-	switch to-string (type? item) [ 
+	switch/default to-string (type? item) [ 
 		"block" [
 			either (length? item) > 1 [
 				join (listItem item/1) (ulTag skip item 1)
@@ -106,17 +106,17 @@ listItem: func [item] [
 		]
 		"word" [ get item ]
 		"string" [ item ]
-	]
+	] [ to-string item ]
 ]
 
 ulTag: func [ list ] [
-	join "<ul>" [(liTag list) "</ul>"]
+	generalTag "ul" (liTag list) []
 ]
 
 liTag: func [ list ] [
 	either (length? list) > 1 [
-		join "<li>" [(listItem list/1) "</li>" (liTag skip list 1)]
+		join (generalTag "li" (listItem list/1) []) (liTag skip list 1)
 	] [
-		join "<li>" [(listItem list/1) "</li>"]
+		generalTag "li" (listItem list/1) []
 	]
 ]
