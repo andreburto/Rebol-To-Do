@@ -94,3 +94,29 @@ pTag: func[ pText /style pAttribs ] [
 h1Tag: func[ h1Text /style h1Attribs ] [
     either style [ generalTag "h1" h1Text [{style} h1Attribs] ] [ generalTag "h1" h1Text [] ]
 ]
+
+listItem: func [item] [
+	switch to-string (type? item) [ 
+		"block" [
+			either (length? item) > 1 [
+				join (listItem item/1) (ulTag skip item 1)
+			] [
+				listItem item/1
+			]
+		]
+		"word" [ get item ]
+		"string" [ item ]
+	]
+]
+
+ulTag: func [ list ] [
+	join "<ul>" [(liTag list) "</ul>"]
+]
+
+liTag: func [ list ] [
+	either (length? list) > 1 [
+		join "<li>" [(listItem list/1) "</li>" (liTag skip list 1)]
+	] [
+		join "<li>" [(listItem list/1) "</li>"]
+	]
+]
